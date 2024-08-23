@@ -132,7 +132,9 @@ pub fn rparse_bytes<'i>(input: &'i [u8], pattern: &str) -> Option<BinCaptures<'i
 }
 
 pub fn lparse_chomp<'i>(input: &mut &'i str, pattern: &str) -> Option<Captures<'i>> {
-    let Some(result) = lparse(input, pattern) else { return None };
+    let Some(result) = lparse(input, pattern) else {
+        return None;
+    };
 
     // update input slice reference to unmatched part
     *input = &input[result.get(0).unwrap().as_str().len()..];
@@ -141,7 +143,9 @@ pub fn lparse_chomp<'i>(input: &mut &'i str, pattern: &str) -> Option<Captures<'
 }
 
 pub fn lparse_chomp_bytes<'i>(input: &mut &'i [u8], pattern: &str) -> Option<BinCaptures<'i>> {
-    let Some(result) = lparse_bytes(input, pattern) else { return None };
+    let Some(result) = lparse_bytes(input, pattern) else {
+        return None;
+    };
 
     // update input slice reference to unmatched part
     *input = &input[result.get(0).unwrap().as_bytes().len()..];
@@ -150,7 +154,9 @@ pub fn lparse_chomp_bytes<'i>(input: &mut &'i [u8], pattern: &str) -> Option<Bin
 }
 
 pub fn rparse_chomp<'i>(input: &mut &'i str, pattern: &str) -> Option<Captures<'i>> {
-    let Some(result) = rparse(input, pattern) else { return None };
+    let Some(result) = rparse(input, pattern) else {
+        return None;
+    };
 
     // update input slice reference to unmatched part
     *input = &input[..input.len() - result.get(0).unwrap().as_str().len()];
@@ -159,7 +165,9 @@ pub fn rparse_chomp<'i>(input: &mut &'i str, pattern: &str) -> Option<Captures<'
 }
 
 pub fn rparse_chomp_bytes<'i>(input: &mut &'i [u8], pattern: &str) -> Option<BinCaptures<'i>> {
-    let Some(result) = rparse_bytes(input, pattern) else { return None };
+    let Some(result) = rparse_bytes(input, pattern) else {
+        return None;
+    };
 
     // update input slice reference to unmatched part
     *input = &input[..input.len() - result.get(0).unwrap().as_bytes().len()];
@@ -168,28 +176,36 @@ pub fn rparse_chomp_bytes<'i>(input: &mut &'i [u8], pattern: &str) -> Option<Bin
 }
 
 pub fn lparse_split<'i>(input: &'i str, pattern: &str) -> Option<Split<'i>> {
-    let Some(result) = lparse(input, pattern) else { return None };
+    let Some(result) = lparse(input, pattern) else {
+        return None;
+    };
     let len = result.get(0).unwrap().as_str().len();
 
     Some(Split(result, &input[len..]))
 }
 
 pub fn lparse_split_bytes<'i>(input: &'i [u8], pattern: &str) -> Option<BinSplit<'i>> {
-    let Some(result) = lparse_bytes(input, pattern) else { return None };
+    let Some(result) = lparse_bytes(input, pattern) else {
+        return None;
+    };
     let len = result.get(0).unwrap().as_bytes().len();
 
     Some(BinSplit(result, &input[len..]))
 }
 
 pub fn rparse_split<'i>(input: &'i str, pattern: &str) -> Option<Split<'i>> {
-    let Some(result) = rparse(input, pattern) else { return None };
+    let Some(result) = rparse(input, pattern) else {
+        return None;
+    };
     let len = result.get(0).unwrap().as_str().len();
 
     Some(Split(result, &input[..input.len() - len]))
 }
 
 pub fn rparse_split_bytes<'i>(input: &'i [u8], pattern: &str) -> Option<BinSplit<'i>> {
-    let Some(result) = rparse_bytes(input, pattern) else { return None };
+    let Some(result) = rparse_bytes(input, pattern) else {
+        return None;
+    };
     let len = result.get(0).unwrap().as_bytes().len();
 
     Some(BinSplit(result, &input[..input.len() - len]))

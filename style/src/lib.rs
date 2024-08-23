@@ -1,5 +1,3 @@
-#![feature(stmt_expr_attributes)]
-
 use eyre::eyre;
 use paste::paste;
 use tracing::{debug, instrument, trace, warn};
@@ -192,7 +190,6 @@ fn apply_declarations(
                 }
             }
             "border-width" => {
-                #[rustfmt::skip]
                 if let Some(result) = CssQuad::parse_shorthand(value, CssLength::parse) {
                     style.border_mut().top_mut(INITIAL_STYLE.border()).width = Some(*result.top_unwrap());
                     style.border_mut().right_mut(INITIAL_STYLE.border()).width = Some(*result.right_unwrap());
@@ -203,7 +200,6 @@ fn apply_declarations(
                 }
             }
             "border-color" => {
-                #[rustfmt::skip]
                 if let Some(result) = CssQuad::parse_shorthand(value, CssColor::parse) {
                     style.border_mut().top_mut(INITIAL_STYLE.border()).color = Some(*result.top_unwrap());
                     style.border_mut().right_mut(INITIAL_STYLE.border()).color = Some(*result.right_unwrap());

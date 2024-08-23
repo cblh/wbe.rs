@@ -27,7 +27,9 @@ fn main() -> eyre::Result<()> {
     let (app, render_request_rx) = App::new(browser.clone());
     let renderer_thread = thread::spawn(move || loop {
         // wait for a request from the egui thread
-        let Ok(mut request) = render_request_rx.recv() else { return };
+        let Ok(mut request) = render_request_rx.recv() else {
+            return;
+        };
 
         // discard all but the last pending request, to avoid wasting time
         // rendering against stale viewport geometry

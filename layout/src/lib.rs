@@ -1,6 +1,3 @@
-#![feature(array_chunks)]
-#![feature(iter_array_chunks)]
-#![feature(stmt_expr_attributes)]
 
 pub mod font;
 pub mod paint;

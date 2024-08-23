@@ -59,9 +59,12 @@ pub fn request(
 
     let line = received.strip_suffix(b"\r\n").unwrap();
     let [_version, status, _explanation] = line.splitn(3, |x| *x == b' ').collect::<Vec<_>>()[..]
-        else { panic!("failed to parse response status line") };
-    let Ok(Ok(status)) = str::from_utf8(status).map(usize::from_str)
-        else { panic!("failed to parse response status code") };
+    else {
+        panic!("failed to parse response status line")
+    };
+    let Ok(Ok(status)) = str::from_utf8(status).map(usize::from_str) else {
+        panic!("failed to parse response status code")
+    };
     received.clear();
 
     let mut headers = BTreeMap::default();
@@ -106,11 +109,14 @@ impl Url {
         let Some(scheme) = lparse_chomp(&mut url, "[A-Za-z0-9-]+:")
             .map(|x| x.get(0).unwrap().as_str().to_owned())
             .or_else(|| base.map(|x| x.scheme.clone()))
-            else { bail!("no scheme found but no base given") };
+        else {
+            bail!("no scheme found but no base given")
+        };
         let (hostname, port) = if lparse_chomp(&mut url, "//").is_some() {
-            let Some(host) = lparse_chomp(&mut url, "[^/]+")
-                .map(|x| x.get(0).unwrap().as_str())
-                else { bail!("failed to chomp host") };
+            let Some(host) = lparse_chomp(&mut url, "[^/]+").map(|x| x.get(0).unwrap().as_str())
+            else {
+                bail!("failed to chomp host")
+            };
             let (port, hostname) = rparse_split(host, r":([0-9]+)")
                 .map(|x| x.into_pair())
                 .unwrap_or((

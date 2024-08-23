@@ -86,8 +86,9 @@ pub fn html_tag(input: &str) -> IResult<&str, (bool, &str, Vec<(&str, String)>)>
 
 pub fn shortest_until_tag_no_case(tag: &str) -> impl FnMut(&str) -> IResult<&str, &str> + '_ {
     |input: &str| {
-        let Some(index) = input.to_ascii_lowercase().find(&tag.to_ascii_lowercase())
-            else { return Err(nom::Err::Incomplete(Needed::Unknown)) };
+        let Some(index) = input.to_ascii_lowercase().find(&tag.to_ascii_lowercase()) else {
+            return Err(nom::Err::Incomplete(Needed::Unknown));
+        };
 
         Ok((&input[index + tag.len()..], &input[..index]))
     }
